@@ -1,0 +1,22 @@
+{
+  "name": "design-copilot",
+  "private": true,
+  "version": "3.4.0",
+  "description": "Suite docente UNITEC/CEUTEC · Ecosistema de Aprendizaje · Generador de prompts para MS Copilot",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "dev:api": "netlify dev"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "lucide-react": "^0.383.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.0"
+  }
+}
