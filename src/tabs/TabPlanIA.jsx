@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Send } from "lucide-react";
+import { ValidadorRedaccion } from "../components/ValidadorRedaccion";
 import { FmtBtns, Terminal } from "../components/Terminal";
 import { CarreraSelect, ComunalidadSelect, Inp, Lbl, Sel } from "../components/atomos";
 import { AccionButtons, OutputPanel } from "../components/salida";
@@ -68,7 +69,7 @@ export function TabPlanIA({marca,C,onSave}) {
         ? <OutputPanel prompt={prompt} fmt={fmt} setFmt={setFmt} tipo="system_prompt" marca={marca} C={C} tab="PlanIA" carrera={carrera}/>
         : <div style={{padding:18,overflowY:"auto",background:C.bg}}>
             {plannerFinal
-              ? <><Terminal contenido={plannerFinal} C={C} marca={marca} titulo="PlanIA · Planner completo"/><FmtBtns fmt={fmt} setFmt={setFmt} C={C}/><AccionButtons texto={plannerFinal} fmt={fmt} C={C} tab="PlanIA_Completo" carrera={carrera}/></>
+              ? <><Terminal contenido={plannerFinal} C={C} marca={marca} titulo="PlanIA · Planner completo"/><FmtBtns fmt={fmt} setFmt={setFmt} C={C}/><AccionButtons texto={plannerFinal} fmt={fmt} C={C} tab="PlanIA_Completo" carrera={carrera}/><ValidadorRedaccion texto={plannerFinal} C={C}/></>
               : <>
                   <div style={{display:"flex",gap:2,marginBottom:8}}>
                     {SECS.map((s,i)=><div key={i} title={`${s}${secciones[i]?" · contenido guardado":""}`} style={{flex:1,height:5,borderRadius:3,background:i===sec?C.primary:secciones[i]?C.success:i<sec?C.accent:C.border}}/>)}
