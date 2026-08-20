@@ -28,7 +28,28 @@ export default function App() {
   const props={marca,C,onSave:actualizarConteo};
   return (
     <div style={{fontFamily:"Poppins,sans-serif",background:C.bg,minHeight:"100vh"}}>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');*{box-sizing:border-box;}select,input,textarea,button{font-family:Poppins,sans-serif;}`}</style>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        *{box-sizing:border-box;}
+        select,input,textarea,button{font-family:Poppins,sans-serif;}
+
+        /* Fase 1 UI/UX — estados y layout responsive, tokens en src/styles/tokens.js */
+        :root{ --dcp-focus: ${C.accent}; }
+
+        .dcp-field{ transition: border-color 150ms ease, box-shadow 150ms ease; }
+        .dcp-field:hover{ border-color: var(--dcp-focus); }
+        .dcp-field:focus{ border-color: var(--dcp-focus); box-shadow: 0 0 0 3px ${C.accent}33; }
+
+        .dcp-btn{ transition: transform 150ms ease, opacity 150ms ease, box-shadow 150ms ease; }
+        .dcp-btn:hover{ opacity: 0.9; }
+        .dcp-btn:active{ transform: scale(0.97); }
+        .dcp-btn:focus-visible{ outline: 2px solid var(--dcp-focus); outline-offset: 2px; }
+
+        /* Layout de panel en espejo: colapsa a una columna en pantallas angostas
+           (laptops de 13" con el historial abierto, tablets) en vez de aplastarse. */
+        .dcp-grid{ display:grid; grid-template-columns: 1fr 1fr; }
+        @media (max-width: 900px){ .dcp-grid{ grid-template-columns: 1fr; } }
+      `}</style>
       {/* HEADER */}
       <div style={{background:`linear-gradient(135deg,${C.primary} 0%,${C.accent} 100%)`}}>
         <div style={{padding:"14px 16px 0"}}>

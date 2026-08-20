@@ -14,7 +14,7 @@ export function TabCompetencias({marca,C,onSave}) {
     : "Selecciona carrera para generar el prompt de Competencias y Carácter...";
   useEffect(()=>{if(carrera&&prompt.length>80){guardarHist("Competencias",carrera,prompt);onSave();}},[prompt,carrera]);
   return (
-    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",height:"calc(100vh - 240px)"}}>
+    <div className="dcp-grid" style={{height:"calc(100vh - 240px)"}}>
       <div style={{padding:18,overflowY:"auto",borderRight:`1px solid ${C.border}`}}>
         <Lbl C={C}>Carrera</Lbl><CarreraSelect marca={marca} value={carrera} onChange={setCarrera} C={C}/>
         <Lbl C={C}>Asignatura</Lbl><Inp placeholder="Ej: Ética Profesional" value={asig} onChange={setAsig} C={C}/>

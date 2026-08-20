@@ -45,7 +45,7 @@ export function TabExperiencias({marca,C,onSave}) {
       <div style={{display:"flex",borderBottom:`2px solid ${C.border}`,background:C.white}}>
         {PASOS.map((p,i)=><button key={i} onClick={()=>setPaso(i+1)} style={{flex:1,padding:"10px 0",border:"none",background:paso===i+1?C.accentLight:C.white,color:paso===i+1?C.primary:C.muted,fontWeight:paso===i+1?700:500,fontSize:12.5,cursor:"pointer",borderBottom:paso===i+1?`3px solid ${C.primary}`:"none",fontFamily:"Poppins,sans-serif"}}>{i+1}. {p}</button>)}
       </div>
-      <div style={{flex:1,display:"grid",gridTemplateColumns:"1fr 1fr",overflow:"hidden"}}>
+      <div className="dcp-grid" style={{flex:1,overflow:"hidden"}}>
         <div style={{padding:18,overflowY:"auto",borderRight:`1px solid ${C.border}`}}>
           {paso===1&&<>
             <div style={{fontSize:11.5,color:C.muted,marginBottom:9}}>Se guarda automáticamente. Tu ADN estará aquí la próxima vez.</div>

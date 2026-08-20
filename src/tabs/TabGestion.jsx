@@ -46,7 +46,7 @@ export function TabGestion({marca,C,onSave}) {
           )}
         </div>
       ) : (
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",height:"calc(100vh - 290px)"}}>
+        <div className="dcp-grid" style={{height:"calc(100vh - 290px)"}}>
           <div style={{padding:18,overflowY:"auto",borderRight:`1px solid ${C.border}`}}>
             <Lbl C={C}>Carrera</Lbl><CarreraSelect marca={marca} value={carrera} onChange={setCarrera} C={C}/>
             <Lbl C={C}>Asignatura a Auditar</Lbl><Inp placeholder="Ej: Cálculo Diferencial" value={asigA} onChange={setAsigA} C={C}/>

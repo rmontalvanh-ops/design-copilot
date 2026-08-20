@@ -147,7 +147,7 @@ export const REGLAS = [
   },
   {
     id: "L9", area: "La Evidencia", regla: "El GRASPS ofrece 2 o 3 opciones de producto, no una sola",
-    frecuencia: "100% de Planners revisados", origen: "Chequeo CGS",
+    frecuencia: "100% de Planners revisados", origen: "Chequeo de Calidad del Ecosistema",
     tip: "El único error con incidencia total en la muestra del Decano. Pregunta guía: ¿le doy al estudiante al menos 2 caminos para mostrar lo que aprendió?",
     check(t) {
       let s = seccion(t, "Producto");

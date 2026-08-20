@@ -13,7 +13,7 @@ const MODO     = import.meta.env.VITE_IA_MODO     || "mock";   // mock | claude 
 async function respuestaSimulada(msgs, marca) {
   await new Promise(r => setTimeout(r, 1300));
   const q = msgs[msgs.length - 1]?.content || "";
-  return `**Ecosistema de Aprendizaje ${marca}**\n\nEn relación a: *"${q.slice(0,60)}..."*\n\nDesde el marco del Ecosistema, el **modelo 3Cs** (Conectar → Construir → Contribuir) y el **modelo L2L** (DIP: Deconstruir → Identificar → Practicar) son las dos metodologías principales. Su diferencia clave: 3Cs enfoca la construcción colaborativa y la contribución comunitaria, mientras que L2L prioriza la metacognición y la autorregulación del estudiante.\n\nLas **6 Comunalidades Humanas** actúan como hilo conductor en ambas metodologías.\n\n> 🔗 Fuente: Unitec Planner · CGS Book v5\n\n_(Respuesta simulada · VITE_IA_MODO=mock)_`;
+  return `**Ecosistema de Aprendizaje ${marca}**\n\nEn relación a: *"${q.slice(0,60)}..."*\n\nDesde el marco del Ecosistema, la secuencia **CCC** (Conectar → Construir → Contribuir) y el modelo **L2L** (DIP: Deconstruir → Identificar → Practicar) son los dos enfoques principales. Su diferencia clave: CCC enfoca la construcción colaborativa y la contribución comunitaria, mientras que L2L prioriza la metacognición y la autorregulación del estudiante.\n\nLas **6 Comunalidades Humanas** actúan como hilo conductor en ambos enfoques.\n\n> 🔗 Fuente: Ecosistema de Aprendizaje institucional\n\n_(Respuesta simulada · VITE_IA_MODO=mock)_`;
 }
 
 /**

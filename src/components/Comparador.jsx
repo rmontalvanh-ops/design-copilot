@@ -38,7 +38,7 @@ export function ComparadorPanel({carrera,asig,tiempo,marca,C,onUsar}) {
       </div>
 
       {/* Dos columnas */}
-      <div style={{flex:1,display:"grid",gridTemplateColumns:"1fr 1fr",overflow:"hidden",gap:0}}>
+      <div className="dcp-grid" style={{flex:1,overflow:"hidden",gap:0}}>
 
         {/* COLUMNA 3Cs */}
         <div style={{display:"flex",flexDirection:"column",borderRight:`2px solid ${C.border}`,overflow:"hidden"}}>
