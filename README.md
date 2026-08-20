@@ -2,7 +2,7 @@
 
 **v3.4** · UNITEC / CEUTEC Honduras · Ecosistema de Aprendizaje
 
-> No ahorra tiempo. Libera tiempo para la transformación humana.
+
 
 ---
 
