@@ -49,6 +49,10 @@ export default function App() {
            (laptops de 13" con el historial abierto, tablets) en vez de aplastarse. */
         .dcp-grid{ display:grid; grid-template-columns: 1fr 1fr; }
         @media (max-width: 900px){ .dcp-grid{ grid-template-columns: 1fr; } }
+
+        /* Sprint E — pulso del botón Copiar al llegar a 100% de completitud */
+        @keyframes dcp-pulso{ 0%,100%{ box-shadow: 0 0 0 0 ${C.accent}55; } 50%{ box-shadow: 0 0 0 6px ${C.accent}00; } }
+        .dcp-btn-pulso{ animation: dcp-pulso 1.6s ease-in-out infinite; }
       `}</style>
       {/* HEADER */}
       <div style={{background:`linear-gradient(135deg,${C.primary} 0%,${C.accent} 100%)`}}>

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Send } from "lucide-react";
+import { Completitud, useCompletitud } from "../components/Completitud";
 import { ValidadorRedaccion } from "../components/ValidadorRedaccion";
 import { FmtBtns, Terminal } from "../components/Terminal";
 import { CarreraSelect, ComunalidadSelect, Inp, Lbl, Sel } from "../components/atomos";
@@ -35,6 +36,17 @@ export function TabPlanIA({marca,C,onSave}) {
   ];
   const comSel=COMUNALIDADES.find(c=>c.valor===com);
   const toggleR=(v)=>setRetrato(p=>p.includes(v)?p.filter(x=>x!==v):p.length<3?[...p,v]:p);
+
+  // Sprint E — completitud del formulario de Modo A (los 6 campos que alimentan el System Prompt).
+  const campos=[
+    {label:"Carrera",valor:carrera},
+    {label:"Nivel",valor:nivel},
+    {label:"Asignatura",valor:asig},
+    {label:"Modalidad",valor:modal},
+    {label:"Comunalidad",valor:com},
+    {label:"Retrato del Egresado",valor:retrato},
+  ];
+  const {completo}=useCompletitud(campos);
 
   const prompt=carrera
     ? `# AGENTE DEL ECOSISTEMA DE APRENDIZAJE — PlanIA
@@ -165,9 +177,10 @@ ${PIE(marca)}`
         <div style={{display:"flex",flexWrap:"wrap",gap:5,marginTop:4}}>
           {RETRATO.map(v=><button key={v} onClick={()=>toggleR(v)} style={{padding:"4px 9px",borderRadius:20,border:`1.5px solid ${C.primary}`,background:retrato.includes(v)?C.primary:C.white,color:retrato.includes(v)?C.white:C.primary,fontSize:11,fontWeight:600,cursor:"pointer",fontFamily:"Poppins,sans-serif"}}>{v}</button>)}
         </div>
+        {modo==="A"&&<Completitud campos={campos} C={C}/>}
       </div>
       {modo==="A"
-        ? <OutputPanel prompt={prompt} fmt={fmt} setFmt={setFmt} tipo="system_prompt" marca={marca} C={C} tab="PlanIA" carrera={carrera}/>
+        ? <OutputPanel prompt={prompt} fmt={fmt} setFmt={setFmt} tipo="system_prompt" marca={marca} C={C} tab="PlanIA" carrera={carrera} completo={completo}/>
         : <div style={{padding:18,overflowY:"auto",background:C.bg}}>
             {plannerFinal
               ? <><Terminal contenido={plannerFinal} C={C} marca={marca} titulo="PlanIA · Planner completo"/><FmtBtns fmt={fmt} setFmt={setFmt} C={C}/><AccionButtons texto={plannerFinal} fmt={fmt} C={C} tab="PlanIA_Completo" carrera={carrera}/><ValidadorRedaccion texto={plannerFinal} C={C}/></>

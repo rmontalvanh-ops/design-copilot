@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Send, CheckCircle } from "lucide-react";
 import { FmtBtns } from "../components/Terminal";
+import { Completitud, useCompletitud } from "../components/Completitud";
 import { CarreraSelect, Inp, Lbl, Sel } from "../components/atomos";
 import { OutputPanel } from "../components/salida";
 import { FILAMENTOS, FUENTES, NOMBRES, PIE } from "../data/ecosistema";
@@ -16,6 +17,20 @@ export function TabExperiencias({marca,C,onSave}) {
   const [fmt,setFmt]=useState("markdown");
   const [chatMsgs,setChatMsgs]=useState([]); const [chatInp,setChatInp]=useState(""); const [carg,setCarg]=useState(false);
   const ua=useCallback((k,v)=>{const n={...adn,[k]:v};setAdn(n);mSet("adn",n);},[adn]);
+
+  // Sprint E — completitud de los dos formularios de esta tab.
+  const camposADN=[
+    {label:"Carrera",valor:adn.carrera},{label:"Asignatura",valor:adn.asig},
+    {label:"Nivel del grupo",valor:adn.nivelG},{label:"Tamaño",valor:adn.tamano},
+    {label:"Modalidad",valor:adn.modal},{label:"Metodología",valor:adn.metod},
+    {label:"Filamento",valor:adn.fil},{label:"Duración",valor:adn.dur},{label:"LMS",valor:adn.lms},
+  ];
+  const camposAct=[
+    {label:"Tema",valor:act.tema},{label:"Semana",valor:act.semana},
+    {label:"Puntos del sílabo",valor:act.puntos},{label:"Tipo de actividad",valor:act.tipo},
+  ];
+  const {completo:completoADN}=useCompletitud(camposADN);
+  const {completo:completoAct}=useCompletitud(camposAct);
 
   const spm=adn.carrera
     ? `# SYSTEM PROMPT — AGENTE DOCENTE MAESTRO\n## Design Co-Pilot · ${marca}\n\n**MEMORIA PERMANENTE:**\n· ${marca} — ${NOMBRES[marca]}\n· Carrera: ${adn.carrera} · Asig: ${adn.asig||"[Asig]"}\n· Nivel: ${adn.nivelG||"[N]"} · Grupo: ${adn.tamano||"[N]"} est.\n· Modalidad: ${adn.modal||"[M]"} · Sesión: ${adn.dur||"[D]"}\n· Metodología: ${adn.metod||"[Metod]"} · Filamento: ${adn.fil||"[Fil]"}\n· LMS: ${adn.lms||"[LMS]"}\n\n**PROTOCOLO SEMANAL:**\nAl recibir nuevo tema, genera:\n1. Secuencia (${adn.metod||"3Cs/L2L"})\n2. Instrucciones + roles para estudiantes\n3. Preguntas guía — filamento "${adn.fil||"[Fil]"}"\n4. Rúbrica formativa (Emergente → En Expansión)\n5. Output listo para ${adn.lms||"LMS"}\n\n**HUMAN IN THE LOOP:** Borrador validable. Docente = autor.\nCierra con: "¿Ajustes para esta clase?"\n\n**FUENTES:**\n${FUENTES}\n${PIE(marca)}`
@@ -58,6 +73,7 @@ export function TabExperiencias({marca,C,onSave}) {
             <Lbl C={C}>Filamento dominante</Lbl><Sel options={FILAMENTOS} value={adn.fil} onChange={v=>ua("fil",v)} C={C}/>
             <Lbl C={C}>Duración de la sesión</Lbl><Inp placeholder="Ej: 90 min" value={adn.dur} onChange={v=>ua("dur",v)} C={C}/>
             <Lbl C={C}>LMS Institucional</Lbl><Sel options={["Canvas","Moodle","Microsoft Teams","Otro"]} value={adn.lms} onChange={v=>ua("lms",v)} C={C}/>
+            <Completitud campos={camposADN} C={C}/>
             <button onClick={()=>setPaso(2)} style={{marginTop:12,width:"100%",background:C.primary,color:"#fff",border:"none",borderRadius:7,padding:"10px 0",fontWeight:700,cursor:"pointer",fontFamily:"Poppins,sans-serif"}}>Generar System Prompt Maestro →</button>
           </>}
           {paso===2&&<>
@@ -71,6 +87,7 @@ export function TabExperiencias({marca,C,onSave}) {
               {["Sí","No"].map(v=><button key={v} onClick={()=>setAct(p=>({...p,eval:v==="Sí"}))} style={{flex:1,padding:"7px 0",borderRadius:7,border:`1.5px solid ${C.primary}`,background:(act.eval&&v==="Sí")||(!act.eval&&v==="No")?C.primary:C.white,color:(act.eval&&v==="Sí")||(!act.eval&&v==="No")?"#fff":C.primary,fontWeight:600,cursor:"pointer",fontFamily:"Poppins,sans-serif"}}>{v}</button>)}
             </div>
             <Lbl C={C}>Contexto especial</Lbl><Inp placeholder="Ej: Algunos van atrasados" value={act.ctx} onChange={v=>setAct(p=>({...p,ctx:v}))} C={C}/>
+            <Completitud campos={camposAct} C={C}/>
             <FmtBtns fmt={fmt} setFmt={setFmt} C={C}/>
           </>}
           {paso===3&&<>
@@ -81,8 +98,8 @@ export function TabExperiencias({marca,C,onSave}) {
           </>}
         </div>
         <div style={{padding:18,overflowY:"auto",background:C.bg}}>
-          {paso===1&&<OutputPanel prompt={spm} fmt={fmt} setFmt={setFmt} tipo="system_prompt" marca={marca} C={C} tab="Experiencias_ADN" carrera={adn.carrera}/>}
-          {paso===2&&<OutputPanel prompt={msgAct} fmt={fmt} setFmt={setFmt} tipo="activacion" marca={marca} C={C} tab="Experiencias_Activacion" carrera={adn.carrera}/>}
+          {paso===1&&<OutputPanel prompt={spm} fmt={fmt} setFmt={setFmt} tipo="system_prompt" marca={marca} C={C} tab="Experiencias_ADN" carrera={adn.carrera} completo={completoADN}/>}
+          {paso===2&&<OutputPanel prompt={msgAct} fmt={fmt} setFmt={setFmt} tipo="activacion" marca={marca} C={C} tab="Experiencias_Activacion" carrera={adn.carrera} completo={completoAct}/>}
           {paso===3&&<div style={{background:C.terminal,borderRadius:10,padding:11,height:"100%",display:"flex",flexDirection:"column"}}>
             <div style={{flex:1,overflowY:"auto",display:"flex",flexDirection:"column",gap:7,marginBottom:7}}>
               {chatMsgs.length===0&&<div style={{color:"#A8D8EA",fontSize:11.5,opacity:0.4}}>Explora variaciones con el Ecosistema...</div>}

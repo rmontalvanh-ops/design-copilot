@@ -4,7 +4,7 @@ import { FmtBtns, Terminal } from "../components/Terminal";
 import { convertir, copiarTexto, descargarMd } from "../utils/formato";
 
 // ── BOTONES ACCIÓN ────────────────────────────────────────────────────────────
-export function AccionButtons({texto,fmt,copilot=false,C,tab="",carrera="",compact=false}) {
+export function AccionButtons({texto,fmt,copilot=false,C,tab="",carrera="",compact=false,completo=true}) {
   const [copiado,setCopiado]=useState(false);
   const contenidoFinal = copilot?texto:convertir(texto,fmt);
   const copiar=useCallback(()=>{
@@ -18,9 +18,11 @@ export function AccionButtons({texto,fmt,copilot=false,C,tab="",carrera="",compa
   },[texto,tab,carrera]);
   if(!texto||texto.length<30) return null;
   const sz=compact?"10px":"12.5px";
+  // Sprint E: el botón Copiar pulsa cuando el formulario que lo alimenta llega
+  // a 100% de completitud — señal visual de "ya podés copiar con confianza".
   return (
     <div style={{display:"flex",gap:6,marginTop:8,flexWrap:"wrap"}}>
-      <button onClick={copiar} style={{background:copiado?C.success:C.accent,color:"#fff",border:"none",borderRadius:7,padding:compact?"6px 12px":"9px 16px",cursor:"pointer",fontWeight:700,fontSize:sz,display:"flex",alignItems:"center",gap:5,fontFamily:"Poppins,sans-serif",transition:"background 0.2s"}}>
+      <button onClick={copiar} className={completo&&!copiado?"dcp-btn-pulso":""} style={{background:copiado?C.success:C.accent,color:"#fff",border:"none",borderRadius:7,padding:compact?"6px 12px":"9px 16px",cursor:"pointer",fontWeight:700,fontSize:sz,display:"flex",alignItems:"center",gap:5,fontFamily:"Poppins,sans-serif",transition:"background 0.2s"}}>
         {copiado?<Check size={11}/>:<Copy size={11}/>}{copiado?"✅ Copiado":copilot?"📋 Copiar para Copilot":`📋 Copiar ${fmt==="markdown"?"MD":fmt==="texto"?"Texto":"HTML"}`}
       </button>
       {!copilot&&<button onClick={descargar} style={{background:"transparent",border:`1.5px solid ${C.primary}`,color:C.primary,borderRadius:7,padding:compact?"6px 10px":"9px 14px",cursor:"pointer",fontWeight:600,fontSize:sz,display:"flex",alignItems:"center",gap:5,fontFamily:"Poppins,sans-serif"}}>
@@ -134,13 +136,13 @@ export const Puente = memo(({tipo,C}) => {
 });
 
 // ── OUTPUT PANEL ──────────────────────────────────────────────────────────────
-export function OutputPanel({prompt,fmt,setFmt,tipo,marca,C,copilot=false,tab="",carrera=""}) {
+export function OutputPanel({prompt,fmt,setFmt,tipo,marca,C,copilot=false,tab="",carrera="",completo=true}) {
   return (
     <div style={{padding:18,overflowY:"auto",background:C.bg}}>
       {!copilot&&<FmtBtns fmt={fmt} setFmt={setFmt} C={C}/>}
       <Terminal contenido={copilot?prompt:convertir(prompt,fmt)} C={C} marca={marca} titulo={tab||tipo}/>
       {prompt&&prompt.length>40&&<>
-        <AccionButtons texto={prompt} fmt={fmt} copilot={copilot} C={C} tab={tab} carrera={carrera}/>
+        <AccionButtons texto={prompt} fmt={fmt} copilot={copilot} C={C} tab={tab} carrera={carrera} completo={completo}/>
         <Puente tipo={tipo} C={C}/>
         {!copilot&&<Validador prompt={prompt} marca={marca} C={C}/>}
       </>}
