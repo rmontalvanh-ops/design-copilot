@@ -79,7 +79,7 @@ function PantallaLogin({ onIngreso }) {
         <BotonEnviar cargando={cargando} textoNormal="Ingresar" textoCargando="Ingresando..." />
         <div style={{ marginTop: 16, fontSize: 11, color: C_LOGIN.muted, textAlign: "center", lineHeight: 1.6 }}>
           Piloto controlado — acceso solo con cuenta institucional invitada.
-          <br />Si no tenés cuenta, contactá a la coordinación académica.
+          <br />Si no tenés cuenta, contactá a josue.montalvan@unitec.edu.hn.
         </div>
       </form>
     </Tarjeta>
