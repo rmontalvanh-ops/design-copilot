@@ -4,6 +4,12 @@
 // Se embebe aquí porque las URLs públicas del Toolkit no son legibles por
 // máquina (aplicación JS sin contenido en el HTML servido) — este archivo es
 // la fuente de verdad para el catálogo dentro de Design Co-Pilot.
+//
+// M5 — catálogo cerrado vigente — sujeto a reemplazo si el Comité de
+// Ecosistema de Aprendizaje aprueba FO-AD-003 punto 2 ("Enfoque Pedagógico
+// y Orientaciones Metodológicas"). No cambiar el comportamiento todavía;
+// esta nota solo deja trazabilidad de que la regla tiene fecha de
+// caducidad conocida.
 
 export const ECOSISTEMA_DEF =
   "El aprendizaje es un proceso que conduce a una consolidación o extensión sostenida y demostrable de la comprensión conceptual, las competencias o el carácter.";

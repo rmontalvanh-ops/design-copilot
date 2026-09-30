@@ -6,6 +6,11 @@
 // frecuencia observada en la Guía del Decano, y check(texto) → {cumple, nota}.
 // "cumple" puede ser true / false / null — null significa "no se encontró la
 // sección para evaluar" y se reporta distinto de un incumplimiento real.
+//
+// M5 — el catálogo cerrado de metodologías que estas reglas asumen (CCC/DIP/
+// CAR) sigue vigente mientras el Comité de Ecosistema de Aprendizaje no
+// apruebe el reemplazo por "Enfoque Pedagógico y Orientaciones Metodológicas"
+// (FO-AD-003, punto 2). No cambiar el comportamiento todavía.
 
 const VERBOS_ACCION = ["analizar","comparar","aplicar","relacionar","evaluar","diseñar",
   "identificar","clasificar","resolver","construir","elaborar","implementar"];

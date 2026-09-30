@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import { Send } from "lucide-react";
+import { sugerenciaPara } from "../data/afinidadesCapacidadHumana";
 import { Completitud, useCompletitud } from "../components/Completitud";
 import { ValidadorRedaccion } from "../components/ValidadorRedaccion";
 import { FmtBtns, Terminal } from "../components/Terminal";
-import { CarreraSelect, ComunalidadSelect, Inp, Lbl, Sel } from "../components/atomos";
+import { CarreraSelect, ComunalidadSelect, InfoBox, Inp, Lbl, Sel } from "../components/atomos";
 import { AccionButtons, OutputPanel } from "../components/salida";
 import { COMUNALIDADES, FUENTES, NOMBRES, PIE, RETRATO } from "../data/ecosistema";
 import { CONTINUO_L2L, SECUENCIA_5ES, catalogoCompacto } from "../data/toolkit";
@@ -22,6 +23,15 @@ export function TabPlanIA({marca,C,onSave}) {
   // Contenido aprobado de cada sección. Antes se perdía al avanzar.
   const [secciones,setSecciones]=useState(()=>Array(9).fill(""));
 
+  // M6 — desambiguación de nombre (nota interna, no visible al docente):
+  // "Metas de Aprendizaje" aquí es la Sección 5 del PLANNER — tipos de
+  // objetivo pedagógico (conceptual/competencia/carácter/L2L). Desde que
+  // Rafael confirmó "Metas de Aprendizaje" también para la columna del
+  // SÍLABO (antes "Unidades de Aprendizaje", FO-AD-003 proponía "Conceptos
+  // de Aprendizaje"), ambos términos son homónimos exactos que describen
+  // cosas distintas: la columna del sílabo es contenido/temas, esta sección
+  // del Planner es estructura de objetivos. No renombrar sin antes acordar
+  // con el Comité — ver sección 4 del documento FO-AD-003/Grafo.
   const SECS=["Identidad del Curso","Pregunta Atractiva","Gran Idea","El Porqué","Metas de Aprendizaje","Preguntas Marco","Evidencia GRASPS","Secuencias Didácticas","Reflexión y Transferencia"];
   const CHIPS_S=[
     ["Ficha técnica + Competencia del sílabo","¿Cuál Comunalidad sugiere el Ecosistema?","Alinea Disciplina → Comunalidad → Retrato"],
@@ -171,12 +181,25 @@ ${PIE(marca)}`
         <Lbl C={C}>Carrera</Lbl><CarreraSelect marca={marca} value={carrera} onChange={setCarrera} C={C}/>
         <Lbl C={C}>Nivel</Lbl><Sel options={["Técnico Universitario","Grado","Posgrado"]} value={nivel} onChange={setNivel} C={C}/>
         <Lbl C={C}>Asignatura</Lbl><Inp placeholder="Ej: Programación OO" value={asig} onChange={setAsig} C={C}/>
-        <Lbl C={C}>Modalidad</Lbl><Sel options={["Presencial","Semipresencial","Virtual","En Línea"]} value={modal} onChange={setModal} C={C}/>
+        <Lbl C={C}>Modalidad</Lbl><Sel options={["B-Learning (vigente)","Semipresencial","Teledocencia"]} value={modal} onChange={setModal} C={C}/>
+        {modal&&<InfoBox C={C}>⚠️ Modalidad institucional pendiente de resolución por el Comité de Ecosistema de Aprendizaje — ver FO-AD-003.</InfoBox>}
         <Lbl C={C}>Comunalidad Humana Central</Lbl><ComunalidadSelect value={com} onChange={setCom} C={C}/>
         <Lbl C={C}>Retrato del Egresado (máx. 3)</Lbl>
         <div style={{display:"flex",flexWrap:"wrap",gap:5,marginTop:4}}>
           {RETRATO.map(v=><button key={v} onClick={()=>toggleR(v)} style={{padding:"4px 9px",borderRadius:20,border:`1.5px solid ${C.primary}`,background:retrato.includes(v)?C.primary:C.white,color:retrato.includes(v)?C.white:C.primary,fontSize:11,fontWeight:600,cursor:"pointer",fontFamily:"Poppins,sans-serif"}}>{v}</button>)}
         </div>
+        {retrato.map(v=>{
+          const s=sugerenciaPara(v);
+          if(!s) return null;
+          return (
+            <div key={v} style={{marginTop:6,padding:"8px 11px",background:C.accentLight,borderRadius:7,fontSize:11,color:C.primary,border:`1px solid ${C.border}`,lineHeight:1.6}}>
+              <strong>💡 Sugerencia para "{v}"</strong> (afinidad del Ecosistema, no obligatoria):<br/>
+              Metodologías afines: {s.afinA.join(", ")}.<br/>
+              Evidencias: {s.seManifiestaEn.join(", ")}.<br/>
+              Instrumento: {s.instrumentoSugerido.join(", ")}.
+            </div>
+          );
+        })}
         {modo==="A"&&<Completitud campos={campos} C={C}/>}
       </div>
       {modo==="A"

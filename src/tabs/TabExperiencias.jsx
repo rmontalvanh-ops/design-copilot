@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Send, CheckCircle } from "lucide-react";
 import { FmtBtns } from "../components/Terminal";
 import { Completitud, useCompletitud } from "../components/Completitud";
-import { CarreraSelect, Inp, Lbl, Sel } from "../components/atomos";
+import { CarreraSelect, InfoBox, Inp, Lbl, Sel } from "../components/atomos";
 import { OutputPanel } from "../components/salida";
 import { FILAMENTOS, FUENTES, NOMBRES, PIE } from "../data/ecosistema";
 import { consultarIA } from "../services/ia";
@@ -68,7 +68,8 @@ export function TabExperiencias({marca,C,onSave}) {
             <Lbl C={C}>Asignatura</Lbl><Inp placeholder="Ej: Cálculo I" value={adn.asig} onChange={v=>ua("asig",v)} C={C}/>
             <Lbl C={C}>Nivel del grupo</Lbl><Sel options={["Inicial (1er año)","Intermedio","Avanzado"]} value={adn.nivelG} onChange={v=>ua("nivelG",v)} C={C}/>
             <Lbl C={C}>Tamaño del grupo</Lbl><Inp placeholder="35" value={adn.tamano} onChange={v=>ua("tamano",v)} C={C} type="number"/>
-            <Lbl C={C}>Modalidad</Lbl><Sel options={["Presencial","Semipresencial","Virtual"]} value={adn.modal} onChange={v=>ua("modal",v)} C={C}/>
+            <Lbl C={C}>Modalidad</Lbl><Sel options={["B-Learning (vigente)","Semipresencial","Teledocencia"]} value={adn.modal} onChange={v=>ua("modal",v)} C={C}/>
+            {adn.modal&&<InfoBox C={C}>⚠️ Modalidad institucional pendiente de resolución por el Comité de Ecosistema de Aprendizaje — ver FO-AD-003.</InfoBox>}
             <Lbl C={C}>Metodología preferida</Lbl><Sel options={["3Cs (Conectar, Construir, Contribuir)","L2L (Learning to Learn)","Ambas"]} value={adn.metod} onChange={v=>ua("metod",v)} C={C}/>
             <Lbl C={C}>Filamento dominante</Lbl><Sel options={FILAMENTOS} value={adn.fil} onChange={v=>ua("fil",v)} C={C}/>
             <Lbl C={C}>Duración de la sesión</Lbl><Inp placeholder="Ej: 90 min" value={adn.dur} onChange={v=>ua("dur",v)} C={C}/>
