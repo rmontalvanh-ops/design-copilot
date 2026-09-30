@@ -69,7 +69,7 @@ function PantallaLogin({ onIngreso }) {
   }, [email, clave, onIngreso]);
 
   return (
-    <Tarjeta titulo="Design Co-Pilot" subtitulo="Acceso piloto institucional · UNITEC / CEUTEC">
+    <Tarjeta titulo="Design Co-Pilot" subtitulo="Acceso piloto· UNITEC / CEUTEC">
       <form onSubmit={enviar}>
         <Lbl C={C_LOGIN}>Correo institucional</Lbl>
         <Inp value={email} onChange={setEmail} placeholder="docente@unitec.edu" C={C_LOGIN} type="email" />
